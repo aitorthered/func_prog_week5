@@ -10,14 +10,14 @@ object week5 {
 }
 
 object mergesort {
-  def msort[T](xs: List[T])(lessThan: (T, T) => Boolean): List[T] = {
+  def msort[T](xs: List[T])(ord: Ordering[T]): List[T] = {
 
     def merge(xs: List[T], ys: List[T]): List[T] =
       (xs, ys) match {
         case (Nil, _) => ys
         case (_, Nil) => xs
         case (x :: xs1, y :: ys1) =>
-          if (lessThan(x, y)) x :: merge(xs1, ys)
+          if (ord.lt(x, y)) x :: merge(xs1, ys)
           else y :: merge(xs, ys1)
       }
 
@@ -25,15 +25,15 @@ object mergesort {
     if (n == 0) xs
     else {
       val (ys, zs) = xs splitAt n
-      merge(msort(ys)(lessThan), msort(zs)(lessThan))
+      merge(msort(ys)(ord), msort(zs)(ord))
     }
   }
 
   val fruit = List("oranges", "apples", "pears")
   val nums = List(5, 31, -1, 2, 3)
 
-  msort(nums)((x: Int, y: Int) => x < y)
-  msort(fruit)((x: String, y: String) => x.compareTo(y) < 0)
+  msort(nums)(Ordering.Int)
+  msort(fruit)(Ordering.String)
 
 }
 
