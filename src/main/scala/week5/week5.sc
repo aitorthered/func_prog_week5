@@ -33,7 +33,7 @@ object mergesort {
   val nums = List(5, 31, -1, 2, 3)
 
   msort(nums)((x: Int, y: Int) => x < y)
-  msort(fruit)((x: String, y: String) => x < y)
+  msort(fruit)((x: String, y: String) => x.compareTo(y) < 0)
 
 }
 
