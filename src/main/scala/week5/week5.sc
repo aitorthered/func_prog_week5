@@ -10,7 +10,7 @@ object week5 {
 }
 
 object mergesort {
-  def msort[T](xs: List[T])(ord: Ordering[T]): List[T] = {
+  def msort[T](xs: List[T])(implicit ord: Ordering[T]): List[T] = {
 
     def merge(xs: List[T], ys: List[T]): List[T] =
       (xs, ys) match {
@@ -25,15 +25,42 @@ object mergesort {
     if (n == 0) xs
     else {
       val (ys, zs) = xs splitAt n
-      merge(msort(ys)(ord), msort(zs)(ord))
+      merge(msort(ys), msort(zs))
     }
   }
 
   val fruit = List("oranges", "apples", "pears")
   val nums = List(5, 31, -1, 2, 3)
 
-  msort(nums)(Ordering.Int)
-  msort(fruit)(Ordering.String)
+  msort(nums)
+  msort(fruit)
 
+  def squareList(xs: List[Int]): List[Int] = xs match {
+    case Nil => Nil
+    case y :: ys => y * y :: squareList(ys)
+  }
+
+  def squareListMap(xs: List[Int]): List[Int] =
+    xs map (x => x * x)
+
+  squareList(nums)
+  squareListMap(nums)
+
+  nums filter (x => x > 0)
+  nums filterNot (x => x > 0)
+  nums partition (x => x > 0)
+
+  nums takeWhile (x => x > 0)
+  nums dropWhile (x => x > 0)
+  nums span (x => x > 0)
+
+  def pack[T](xs: List[T]): List[List[T]] = xs match {
+    case Nil => Nil
+    case x :: xs1 =>
+      val (first, rest) = xs span (z => z == x)
+      first :: pack(rest)
+  }
+
+  pack(nums)
+  pack(List("a", "a", "a", "b", "c", "c", "a"))
 }
-
