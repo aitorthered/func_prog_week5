@@ -3,7 +3,7 @@ import scala.io.Source
 object x {
   val in = Source.fromURL("https://lamp.epfl.ch/wp-content/uploads/2019/01/linuxwords.txt")
 
-  val words = in.getLines
+  val words = in.getLines.toList filter (word => word forall (chr => chr.isLetter))
 
   val mnem = Map(
     '2' -> "ABC", '3' -> "DEF", '4' -> "GHI",
@@ -22,4 +22,21 @@ object x {
   wordCode("TRES")
   wordCode("JAVA")
   wordCode("java")
+
+  val wordsForNum: Map[String, Seq[String]] =
+    words groupBy wordCode withDefaultValue Seq()
+
+  def encode(number: String): Set[List[String]] =
+    if (number.isEmpty) Set(List())
+    else {
+      for {
+        split <- 1 to number.length
+        word <- wordsForNum(number take split)
+        rest <- encode(number drop split)
+      } yield word :: rest
+    }.toSet
+
+  encode("7225247386")
+
+  
 }
