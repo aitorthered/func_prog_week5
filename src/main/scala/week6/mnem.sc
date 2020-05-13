@@ -17,7 +17,9 @@ object x {
   } yield letter -> number)
 
   def wordCode(word: String): String =
-    word map charCode
-  
+    word.toUpperCase map charCode
+
   wordCode("TRES")
+  wordCode("JAVA")
+  wordCode("java")
 }
