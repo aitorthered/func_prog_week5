@@ -1,3 +1,4 @@
+import scala.language.postfixOps
 
 object pairs {
   def isPrime(n: Int): Boolean = (2 until n) forall (n % _ != 0)
@@ -20,5 +21,7 @@ object pairs {
 
     } yield (x*y) ) sum
   }
-  
+
+  val queens = List(2,0,1)
+  (3-1 to 0 by -1) zip queens
 }
