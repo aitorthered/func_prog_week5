@@ -16,5 +16,9 @@ object x {
     letter <- strings
   } yield letter -> number)
 
+  def wordCode(word: String): String = for {
+    character <- word
+  } yield charCode(character)
 
+  wordCode("TRES")
 }
