@@ -38,5 +38,8 @@ object x {
 
   encode("7225247386")
 
-  
+  def translate(number: String): Set[String] =
+    encode(number) map (_ mkString " ")
+
+  translate("7225247386")
 }
